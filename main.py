@@ -1,5 +1,8 @@
 import streamlit as st
 import pickle
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 st.title('Estimation')
 
@@ -64,10 +67,12 @@ if option1 != "":
                             elderfemale = 1
                         else:
                             elderfemale = 0
-
-                        st.write(smoker, age, is_east, bmi, is_north, underweight, overweight, severlyoverweight, nokid, kids, elderfemale)
-                        st.write("Estimation = ")
+                        X = list((smoker, age, is_east, bmi, is_north, underweight, overweight, severlyoverweight, nokid, kids, elderfemale))
                         with open('model.pkl', 'rb') as f:
                             model = pickle.load(f)
-
-                        st.write(model)
+                        X= np.asarray([1,(age-39.222139117427076)/14.044332734156425,1,(bmi-30.66345175766642)/6.100468409615801, 0,0, 0,0, 0,1, 0])
+                        X=X.reshape(1,-1)
+                        poly = PolynomialFeatures(degree=2)
+                        poly_variables = poly.fit_transform(X)
+                        y_pred = model.predict(poly_variables)
+                        st.write(y_pred)
