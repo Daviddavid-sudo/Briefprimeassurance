@@ -54,18 +54,30 @@ with st.form('form', clear_on_submit=True):
     ("","male","female"),)   
     bmi = st.number_input(label="enter bmi")
     age = st.number_input("enter age", min_value=0, max_value=90,step=1)
-    if bmi < 18:
+    if bmi > 45.5:
+        underweight = 0
+        normal = 0
+        overweight = 0
+        severlyoverweight = 0
+        ogre = 1
+    if bmi < 17:
         underweight = 1
+        normal = 0
         overweight = 0
         severlyoverweight = 0
+        ogre = 0
     if bmi > 38:
-        underweight = 0
+        uunderweight = 1
+        normal = 0
         overweight = 0
-        severlyoverweight = 1
-    if bmi >= 18 and bmi <= 38:
         severlyoverweight = 0
-        underweight = 0
-        overweight = 1
+        ogre = 0
+    if bmi >= 18 and bmi <= 38:
+        underweight = 1
+        normal = 0
+        overweight = 0
+        severlyoverweight = 0
+        ogre = 0
     if age != 0:
         if age > 60 and option3 == "female":
             elderfemale = 1
@@ -73,10 +85,10 @@ with st.form('form', clear_on_submit=True):
             elderfemale = 0
 
     if st.form_submit_button("submit") :
-        X = list((smoker, age, is_east, bmi, is_north, underweight, overweight, severlyoverweight, nokid, kids, elderfemale))
+        X = list(('smoker','normal', 'is_north','underweight', 'overweight','severlyoverweight','ogre','nokid', 'onekid', 'twokid','fourkid', 'fivekid','test','elderfemale','middleagefemale', 'youngerfemale', 'youngfemale', 'teens', 'sex'))
         with open('model.pkl', 'rb') as f:
             model = pickle.load(f)
-        X= np.asarray([1,(age-39.222139117427076)/14.044332734156425,1,(bmi-30.66345175766642)/6.100468409615801, 0,0, 0,0, 0,1, 0])
+        X= np.asarray([smoker, ])
         X=X.reshape(1,-1)
         poly = PolynomialFeatures(degree=2)
         poly_variables = poly.fit_transform(X)
