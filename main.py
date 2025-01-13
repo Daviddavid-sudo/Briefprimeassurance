@@ -166,10 +166,10 @@ with st.form('form', clear_on_submit=True):
 
 
     if st.form_submit_button("submit") :
-        X = list(('smoker','normal', 'is_north','underweight', 'overweight','severlyoverweight','ogre','nokid', 'onekid', 'twokid','fourkid', 'fivekid','test','elderfemale','middleagefemale', 'youngerfemale', 'youngfemale', 'teens', 'sex'))
+        X = list(('smoker','normal', 'is_east','is_north','underweight', 'overweight','severlyoverweight','ogre','nokid', 'onekid', 'twokid','fourkid', 'fivekid','test','elderfemale','middleagefemale', 'youngerfemale', 'youngfemale', 'teens', 'sex'))
         with open('model.pkl', 'rb') as f:
             model = pickle.load(f)
-        X= np.asarray([smoker, normal, is_north, underweight, overweight, severlyoverweight, ogre, nokid, onekid, twokid,fourkid, fivekid,test,elderfemale,middleagefemale, youngerfemale, youngfemale, teens, sex])
+        X= np.asarray([smoker, normal, is_east,is_north, underweight, overweight, severlyoverweight, ogre, nokid, onekid, twokid,fourkid, fivekid,test,elderfemale,middleagefemale, youngerfemale, youngfemale, teens, sex])
         X=X.reshape(1,-1)
         poly = PolynomialFeatures(degree=2)
         poly_variables = poly.fit_transform(X)
